@@ -136,20 +136,21 @@ export default function DashboardPage() {
   return (
     <div className="space-y-6">
       {/* Page Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
-          <p className="text-gray-500">Welcome back! Here&apos;s what&apos;s happening with your business.</p>
+          <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Dashboard</h1>
+          <p className="text-sm sm:text-base text-gray-500">Welcome back! Here&apos;s what&apos;s happening with your business.</p>
         </div>
-        <div className="flex items-center gap-3">
-          <Button variant="outline" size="sm" onClick={handleRefresh}>
+        <div className="flex items-center gap-2 sm:gap-3">
+          <Button variant="outline" size="sm" onClick={handleRefresh} className="flex-1 sm:flex-none">
             <RefreshCw className={`h-4 w-4 mr-2 ${isRefreshing ? 'animate-spin' : ''}`} />
             Refresh
           </Button>
-          <div className="flex items-center gap-2 text-sm text-gray-500 bg-white px-3 py-1.5 rounded-lg border">
+          <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-500 bg-white px-2 sm:px-3 py-1.5 rounded-lg border">
             <div className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-            <Clock className="h-4 w-4" />
-            {currentTime.toLocaleTimeString()}
+            <Clock className="h-3 w-3 sm:h-4 sm:w-4" />
+            <span className="hidden sm:inline">{currentTime.toLocaleTimeString()}</span>
+            <span className="sm:hidden">{currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
           </div>
         </div>
       </div>
@@ -157,20 +158,20 @@ export default function DashboardPage() {
       {/* AI Insights Banner */}
       <Card className="bg-gradient-to-r from-violet-600 to-purple-600 border-0 text-white overflow-hidden relative">
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4xIj48cGF0aCBkPSJNMzYgMzBoLTZWMGg2djMwem0tNiAwSDBoNnYzMGgtNlYzMHoiLz48L2c+PC9nPjwvc3ZnPg==')] opacity-10" />
-        <CardContent className="p-6 relative">
-          <div className="flex items-start gap-4">
-            <div className="h-12 w-12 rounded-xl bg-white/20 flex items-center justify-center flex-shrink-0">
-              <Sparkles className="h-6 w-6" />
+        <CardContent className="p-4 sm:p-6 relative">
+          <div className="flex flex-col sm:flex-row items-start gap-3 sm:gap-4">
+            <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-xl bg-white/20 flex items-center justify-center flex-shrink-0">
+              <Sparkles className="h-5 w-5 sm:h-6 sm:w-6" />
             </div>
-            <div className="flex-1">
-              <h3 className="font-semibold text-lg mb-1">Kyte AI Insights</h3>
-              <p className="text-white/80 mb-4">
-                Your business is performing 15% better than last week. Here are 3 actionable insights to keep the momentum.
+            <div className="flex-1 w-full">
+              <h3 className="font-semibold text-base sm:text-lg mb-1">Kyte AI Insights</h3>
+              <p className="text-white/80 text-sm sm:text-base mb-3 sm:mb-4">
+                Your business is performing 15% better than last week. Here are 3 actionable insights.
               </p>
-              <div className="grid md:grid-cols-3 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3">
                 {aiInsights.map((insight, index) => (
                   <div key={index} className="bg-white/10 backdrop-blur rounded-xl p-3 hover:bg-white/20 transition-colors cursor-pointer">
-                    <div className="flex items-center gap-2 mb-2">
+                    <div className="flex items-center gap-2 mb-1 sm:mb-2">
                       <insight.icon className="h-4 w-4" />
                       <span className="text-sm font-medium">{insight.title}</span>
                     </div>
@@ -184,28 +185,28 @@ export default function DashboardPage() {
       </Card>
 
       {/* Stats Grid */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
         {stats.map((stat) => (
           <Card key={stat.name} className="overflow-hidden hover:shadow-lg transition-shadow">
-            <CardContent className="p-6">
+            <CardContent className="p-4 sm:p-6">
               <div className="flex items-center justify-between">
-                <div className={`h-12 w-12 rounded-xl bg-gradient-to-br ${stat.gradient} flex items-center justify-center shadow-lg ${stat.shadowColor}`}>
-                  <stat.icon className="h-6 w-6 text-white" />
+                <div className={`h-10 w-10 sm:h-12 sm:w-12 rounded-xl bg-gradient-to-br ${stat.gradient} flex items-center justify-center shadow-lg ${stat.shadowColor}`}>
+                  <stat.icon className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
                 </div>
-                <div className={`flex items-center gap-1 text-sm font-medium ${
+                <div className={`flex items-center gap-0.5 sm:gap-1 text-xs sm:text-sm font-medium ${
                   stat.trend === 'up' ? 'text-emerald-600' : 'text-red-600'
                 }`}>
                   {stat.trend === 'up' ? (
-                    <ArrowUpRight className="h-4 w-4" />
+                    <ArrowUpRight className="h-3 w-3 sm:h-4 sm:w-4" />
                   ) : (
-                    <ArrowDownRight className="h-4 w-4" />
+                    <ArrowDownRight className="h-3 w-3 sm:h-4 sm:w-4" />
                   )}
                   {stat.change}
                 </div>
               </div>
-              <div className="mt-4">
-                <p className="text-3xl font-bold text-gray-900">{stat.value}</p>
-                <p className="text-sm text-gray-500 mt-1">{stat.name}</p>
+              <div className="mt-3 sm:mt-4">
+                <p className="text-xl sm:text-3xl font-bold text-gray-900">{stat.value}</p>
+                <p className="text-xs sm:text-sm text-gray-500 mt-0.5 sm:mt-1">{stat.name}</p>
               </div>
             </CardContent>
           </Card>
@@ -213,40 +214,40 @@ export default function DashboardPage() {
       </div>
 
       {/* Main Content Grid */}
-      <div className="grid gap-6 lg:grid-cols-3">
+      <div className="grid gap-4 sm:gap-6 lg:grid-cols-3">
         {/* Recent Orders */}
         <Card className="lg:col-span-2">
-          <CardHeader className="flex flex-row items-center justify-between pb-4">
+          <CardHeader className="flex flex-row items-center justify-between pb-3 sm:pb-4">
             <div>
-              <CardTitle className="text-lg">Recent Orders</CardTitle>
-              <CardDescription>Latest customer orders across all channels</CardDescription>
+              <CardTitle className="text-base sm:text-lg">Recent Orders</CardTitle>
+              <CardDescription className="text-xs sm:text-sm">Latest customer orders</CardDescription>
             </div>
-            <Button variant="ghost" size="sm" className="text-blue-600 hover:text-blue-700">
-              View all <ArrowRight className="ml-2 h-4 w-4" />
+            <Button variant="ghost" size="sm" className="text-blue-600 hover:text-blue-700 text-xs sm:text-sm px-2 sm:px-3">
+              View all <ArrowRight className="ml-1 sm:ml-2 h-3 w-3 sm:h-4 sm:w-4" />
             </Button>
           </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
+          <CardContent className="px-4 sm:px-6">
+            <div className="space-y-2 sm:space-y-3">
               {recentOrders.map((order) => (
                 <div
                   key={order.id}
-                  className="flex items-center justify-between p-4 rounded-xl bg-gray-50/50 hover:bg-gray-50 transition-colors border border-transparent hover:border-gray-200"
+                  className="flex items-center justify-between p-3 sm:p-4 rounded-xl bg-gray-50/50 hover:bg-gray-50 transition-colors border border-transparent hover:border-gray-200"
                 >
-                  <div className="flex items-center gap-4">
-                    <div className="h-10 w-10 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center text-white font-semibold">
+                  <div className="flex items-center gap-3 sm:gap-4 min-w-0">
+                    <div className="h-9 w-9 sm:h-10 sm:w-10 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center text-white font-semibold text-sm sm:text-base flex-shrink-0">
                       {order.avatar}
                     </div>
-                    <div>
-                      <p className="font-medium text-gray-900">{order.customer}</p>
-                      <p className="text-sm text-gray-500">{order.id} · {order.date}</p>
+                    <div className="min-w-0">
+                      <p className="font-medium text-gray-900 text-sm sm:text-base truncate">{order.customer}</p>
+                      <p className="text-xs sm:text-sm text-gray-500">{order.id} · {order.date}</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-4">
-                    <span className={`px-2.5 py-1 rounded-full text-xs font-medium ${statusColors[order.status].bg} ${statusColors[order.status].text}`}>
+                  <div className="flex items-center gap-2 sm:gap-4 flex-shrink-0">
+                    <span className={`hidden sm:inline-block px-2.5 py-1 rounded-full text-xs font-medium ${statusColors[order.status].bg} ${statusColors[order.status].text}`}>
                       {order.status}
                     </span>
-                    <span className="font-semibold text-gray-900">{order.total}</span>
-                    <Button variant="ghost" size="icon" className="h-8 w-8">
+                    <span className="font-semibold text-gray-900 text-sm sm:text-base">{order.total}</span>
+                    <Button variant="ghost" size="icon" className="h-7 w-7 sm:h-8 sm:w-8 hidden sm:flex">
                       <MoreHorizontal className="h-4 w-4" />
                     </Button>
                   </div>
@@ -327,35 +328,35 @@ export default function DashboardPage() {
 
       {/* Quick Actions */}
       <Card>
-        <CardHeader>
-          <CardTitle className="text-lg">Quick Actions</CardTitle>
-          <CardDescription>Common tasks you perform frequently</CardDescription>
+        <CardHeader className="pb-3 sm:pb-6">
+          <CardTitle className="text-base sm:text-lg">Quick Actions</CardTitle>
+          <CardDescription className="text-xs sm:text-sm">Common tasks you perform frequently</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            <Button variant="outline" className="h-auto py-6 flex-col gap-3 hover:border-blue-300 hover:bg-blue-50/50">
-              <div className="h-12 w-12 rounded-xl bg-blue-100 flex items-center justify-center">
-                <ShoppingCart className="h-6 w-6 text-blue-600" />
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
+            <Button variant="outline" className="h-auto py-4 sm:py-6 flex-col gap-2 sm:gap-3 hover:border-blue-300 hover:bg-blue-50/50">
+              <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-xl bg-blue-100 flex items-center justify-center">
+                <ShoppingCart className="h-5 w-5 sm:h-6 sm:w-6 text-blue-600" />
               </div>
-              <span className="font-medium">New Order</span>
+              <span className="font-medium text-xs sm:text-sm">New Order</span>
             </Button>
-            <Button variant="outline" className="h-auto py-6 flex-col gap-3 hover:border-emerald-300 hover:bg-emerald-50/50">
-              <div className="h-12 w-12 rounded-xl bg-emerald-100 flex items-center justify-center">
-                <Package className="h-6 w-6 text-emerald-600" />
+            <Button variant="outline" className="h-auto py-4 sm:py-6 flex-col gap-2 sm:gap-3 hover:border-emerald-300 hover:bg-emerald-50/50">
+              <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-xl bg-emerald-100 flex items-center justify-center">
+                <Package className="h-5 w-5 sm:h-6 sm:w-6 text-emerald-600" />
               </div>
-              <span className="font-medium">Add Product</span>
+              <span className="font-medium text-xs sm:text-sm">Add Product</span>
             </Button>
-            <Button variant="outline" className="h-auto py-6 flex-col gap-3 hover:border-violet-300 hover:bg-violet-50/50">
-              <div className="h-12 w-12 rounded-xl bg-violet-100 flex items-center justify-center">
-                <Users className="h-6 w-6 text-violet-600" />
+            <Button variant="outline" className="h-auto py-4 sm:py-6 flex-col gap-2 sm:gap-3 hover:border-violet-300 hover:bg-violet-50/50">
+              <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-xl bg-violet-100 flex items-center justify-center">
+                <Users className="h-5 w-5 sm:h-6 sm:w-6 text-violet-600" />
               </div>
-              <span className="font-medium">New Customer</span>
+              <span className="font-medium text-xs sm:text-sm">New Customer</span>
             </Button>
-            <Button variant="outline" className="h-auto py-6 flex-col gap-3 hover:border-amber-300 hover:bg-amber-50/50">
-              <div className="h-12 w-12 rounded-xl bg-amber-100 flex items-center justify-center">
-                <DollarSign className="h-6 w-6 text-amber-600" />
+            <Button variant="outline" className="h-auto py-4 sm:py-6 flex-col gap-2 sm:gap-3 hover:border-amber-300 hover:bg-amber-50/50">
+              <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-xl bg-amber-100 flex items-center justify-center">
+                <DollarSign className="h-5 w-5 sm:h-6 sm:w-6 text-amber-600" />
               </div>
-              <span className="font-medium">Create Invoice</span>
+              <span className="font-medium text-xs sm:text-sm">Create Invoice</span>
             </Button>
           </div>
         </CardContent>

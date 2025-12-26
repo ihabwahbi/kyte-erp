@@ -6,7 +6,9 @@ import {
   Filter,
   Download,
   MoreHorizontal,
-  Eye
+  Eye,
+  TrendingUp,
+  TrendingDown
 } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -41,27 +43,27 @@ const statusConfig: Record<string, { label: string; variant: 'default' | 'second
 }
 
 const stats = [
-  { label: 'Total Orders', value: '342', change: '+8.2%' },
-  { label: 'Revenue', value: '$125,430', change: '+12.5%' },
-  { label: 'Avg Order Value', value: '$367', change: '+4.1%' },
-  { label: 'Pending Orders', value: '28', change: '-3.2%' },
+  { label: 'Total Orders', value: '342', change: '+8.2%', up: true },
+  { label: 'Revenue', value: '$125,430', change: '+12.5%', up: true },
+  { label: 'Avg Order Value', value: '$367', change: '+4.1%', up: true },
+  { label: 'Pending Orders', value: '28', change: '-3.2%', up: false },
 ]
 
 export default function SalesPage() {
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {/* Page Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Sales & Orders</h1>
-          <p className="text-gray-500">Manage customer orders and track sales</p>
+          <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Sales & Orders</h1>
+          <p className="text-sm sm:text-base text-gray-500">Manage customer orders and track sales</p>
         </div>
-        <div className="flex gap-3">
-          <Button variant="outline">
+        <div className="flex gap-2 sm:gap-3">
+          <Button variant="outline" size="sm" className="flex-1 sm:flex-none">
             <Download className="mr-2 h-4 w-4" />
             Export
           </Button>
-          <Button>
+          <Button size="sm" className="flex-1 sm:flex-none">
             <Plus className="mr-2 h-4 w-4" />
             New Order
           </Button>
@@ -69,14 +71,15 @@ export default function SalesPage() {
       </div>
 
       {/* Stats */}
-      <div className="grid gap-4 md:grid-cols-4">
+      <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
         {stats.map((stat) => (
           <Card key={stat.label}>
-            <CardContent className="p-6">
-              <p className="text-sm text-gray-500">{stat.label}</p>
-              <div className="flex items-baseline gap-2">
-                <p className="text-2xl font-bold">{stat.value}</p>
-                <span className={`text-sm font-medium ${stat.change.startsWith('+') ? 'text-green-600' : 'text-red-600'}`}>
+            <CardContent className="p-4 sm:p-6">
+              <p className="text-xs sm:text-sm text-gray-500">{stat.label}</p>
+              <div className="flex items-baseline gap-2 mt-1">
+                <p className="text-xl sm:text-2xl font-bold">{stat.value}</p>
+                <span className={`flex items-center text-xs sm:text-sm font-medium ${stat.up ? 'text-green-600' : 'text-red-600'}`}>
+                  {stat.up ? <TrendingUp className="h-3 w-3 mr-0.5" /> : <TrendingDown className="h-3 w-3 mr-0.5" />}
                   {stat.change}
                 </span>
               </div>
@@ -85,71 +88,104 @@ export default function SalesPage() {
         ))}
       </div>
 
-      {/* Orders Table */}
+      {/* Orders Table/List */}
       <Card>
-        <CardHeader>
-          <div className="flex items-center justify-between">
+        <CardHeader className="pb-3 sm:pb-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
-              <CardTitle>Recent Orders</CardTitle>
-              <CardDescription>View and manage customer orders</CardDescription>
+              <CardTitle className="text-base sm:text-lg">Recent Orders</CardTitle>
+              <CardDescription className="text-xs sm:text-sm">View and manage customer orders</CardDescription>
             </div>
-            <div className="flex gap-3">
-              <div className="relative w-64">
+            <div className="flex gap-2 sm:gap-3">
+              <div className="relative flex-1 sm:w-64">
                 <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
                 <Input placeholder="Search orders..." className="pl-10" />
               </div>
-              <Button variant="outline" size="icon">
+              <Button variant="outline" size="icon" className="flex-shrink-0">
                 <Filter className="h-4 w-4" />
               </Button>
             </div>
           </div>
         </CardHeader>
-        <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Order ID</TableHead>
-                <TableHead>Customer</TableHead>
-                <TableHead className="text-center">Items</TableHead>
-                <TableHead className="text-right">Total</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Date</TableHead>
-                <TableHead className="w-20">Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {orders.map((order) => {
-                const config = statusConfig[order.status]
-                return (
-                  <TableRow key={order.id}>
-                    <TableCell className="font-mono text-sm font-medium">{order.id}</TableCell>
-                    <TableCell>
-                      <div>
-                        <p className="font-medium">{order.customer}</p>
-                        <p className="text-sm text-gray-500">{order.email}</p>
-                      </div>
-                    </TableCell>
-                    <TableCell className="text-center">{order.items}</TableCell>
-                    <TableCell className="text-right font-medium">${order.total.toLocaleString()}</TableCell>
-                    <TableCell>
-                      <Badge variant={config.variant}>{config.label}</Badge>
-                    </TableCell>
-                    <TableCell className="text-gray-500">{order.date}</TableCell>
-                    <TableCell>
-                      <div className="flex gap-1">
-                        <Button variant="ghost" size="icon">
-                          <Eye className="h-4 w-4" />
-                        </Button>
-                        <Button variant="ghost" size="icon">
-                          <MoreHorizontal className="h-4 w-4" />
-                        </Button>
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                )
-              })}
-            </TableBody>
-          </Table>
+        <CardContent className="px-4 sm:px-6">
+          {/* Desktop Table */}
+          <div className="hidden md:block">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Order ID</TableHead>
+                  <TableHead>Customer</TableHead>
+                  <TableHead className="text-center">Items</TableHead>
+                  <TableHead className="text-right">Total</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead>Date</TableHead>
+                  <TableHead className="w-20">Actions</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {orders.map((order) => {
+                  const config = statusConfig[order.status]
+                  return (
+                    <TableRow key={order.id}>
+                      <TableCell className="font-mono text-sm font-medium">{order.id}</TableCell>
+                      <TableCell>
+                        <div>
+                          <p className="font-medium">{order.customer}</p>
+                          <p className="text-sm text-gray-500">{order.email}</p>
+                        </div>
+                      </TableCell>
+                      <TableCell className="text-center">{order.items}</TableCell>
+                      <TableCell className="text-right font-medium">${order.total.toLocaleString()}</TableCell>
+                      <TableCell>
+                        <Badge variant={config.variant}>{config.label}</Badge>
+                      </TableCell>
+                      <TableCell className="text-gray-500">{order.date}</TableCell>
+                      <TableCell>
+                        <div className="flex gap-1">
+                          <Button variant="ghost" size="icon">
+                            <Eye className="h-4 w-4" />
+                          </Button>
+                          <Button variant="ghost" size="icon">
+                            <MoreHorizontal className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  )
+                })}
+              </TableBody>
+            </Table>
+          </div>
+
+          {/* Mobile Card List */}
+          <div className="md:hidden space-y-3">
+            {orders.map((order) => {
+              const config = statusConfig[order.status]
+              return (
+                <div key={order.id} className="p-4 rounded-xl border bg-gray-50/50">
+                  <div className="flex items-start justify-between mb-2">
+                    <div>
+                      <p className="font-medium text-gray-900">{order.customer}</p>
+                      <p className="text-xs text-gray-500">{order.id}</p>
+                    </div>
+                    <Badge variant={config.variant} className="text-xs">
+                      {config.label}
+                    </Badge>
+                  </div>
+                  <div className="flex items-center justify-between pt-2 border-t border-gray-200">
+                    <div>
+                      <p className="text-lg font-bold text-gray-900">${order.total.toLocaleString()}</p>
+                      <p className="text-xs text-gray-500">{order.items} items · {order.date}</p>
+                    </div>
+                    <Button variant="ghost" size="sm">
+                      <Eye className="h-4 w-4 mr-1" />
+                      View
+                    </Button>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
         </CardContent>
       </Card>
     </div>

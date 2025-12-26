@@ -16,7 +16,11 @@ import {
   Globe,
   Rocket,
   ChevronRight,
-  Play
+  Play,
+  MapPin,
+  Lock,
+  FileCheck,
+  Server
 } from 'lucide-react'
 import { useState, useEffect } from 'react'
 
@@ -68,21 +72,47 @@ const stats = [
 const testimonials = [
   {
     quote: "Kyte transformed how we operate. What used to take our team hours now happens automatically.",
-    author: "Sarah Chen",
+    author: "Sarah Mitchell",
     role: "Operations Director",
-    company: "TechFlow Solutions"
+    company: "TechFlow Solutions",
+    location: "Sydney"
   },
   {
     quote: "The AI assistant is like having an expert consultant available 24/7. Game changer for our small team.",
-    author: "Marcus Johnson",
+    author: "Marcus Thompson",
     role: "CEO",
-    company: "Rapid Retail Co"
+    company: "Rapid Retail Co",
+    location: "Melbourne"
   },
   {
     quote: "We evaluated SAP, Odoo, and NetSuite. Kyte was up and running while the others were still in 'discovery phase'.",
-    author: "Emily Rodriguez",
+    author: "Emma Richards",
     role: "CFO",
-    company: "GrowthWorks Inc"
+    company: "GrowthWorks Australia",
+    location: "Brisbane"
+  }
+]
+
+const australianFeatures = [
+  {
+    icon: Server,
+    title: 'Australian Hosted',
+    description: 'All data stored securely in Australian data centres. Your data never leaves the country.'
+  },
+  {
+    icon: FileCheck,
+    title: 'ATO Compliant',
+    description: 'Fully compliant with Australian Taxation Office requirements including STP Phase 2.'
+  },
+  {
+    icon: Shield,
+    title: 'Privacy Act Ready',
+    description: 'Built to meet Australian Privacy Principles (APPs) and data protection standards.'
+  },
+  {
+    icon: Lock,
+    title: 'Australian Standards',
+    description: 'ISO 27001 certified with compliance to Australian cyber security frameworks.'
   }
 ]
 
@@ -400,6 +430,10 @@ export default function HomePage() {
                     <div>
                       <div className="font-semibold text-white">{testimonial.author}</div>
                       <div className="text-gray-500">{testimonial.role} at {testimonial.company}</div>
+                      <div className="flex items-center justify-center gap-1 text-gray-600 mt-1">
+                        <MapPin className="h-3 w-3" />
+                        <span className="text-xs">{testimonial.location}, Australia</span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -418,6 +452,62 @@ export default function HomePage() {
                   }`}
                 />
               ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Australian Trust Section */}
+      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-slate-900/50 to-transparent">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/20 mb-6">
+              <MapPin className="h-4 w-4 text-emerald-400" />
+              <span className="text-sm text-emerald-300">Proudly Australian</span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4">
+              Built for Australian Businesses
+            </h2>
+            <p className="text-lg text-gray-400 max-w-2xl mx-auto">
+              100% Australian owned and operated. Your data stays in Australia, 
+              protected by Australian law and hosted on local infrastructure.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {australianFeatures.map((feature) => (
+              <div
+                key={feature.title}
+                className="p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-emerald-500/30 transition-all"
+              >
+                <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center mb-4">
+                  <feature.icon className="h-6 w-6 text-white" />
+                </div>
+                <h3 className="text-lg font-semibold mb-2">{feature.title}</h3>
+                <p className="text-sm text-gray-400">{feature.description}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-12 flex flex-wrap justify-center gap-8 items-center opacity-60">
+            <div className="text-center">
+              <div className="text-2xl font-bold text-white">Sydney</div>
+              <div className="text-xs text-gray-500">Primary Data Centre</div>
+            </div>
+            <div className="h-8 w-px bg-white/20 hidden sm:block" />
+            <div className="text-center">
+              <div className="text-2xl font-bold text-white">Melbourne</div>
+              <div className="text-xs text-gray-500">Backup Data Centre</div>
+            </div>
+            <div className="h-8 w-px bg-white/20 hidden sm:block" />
+            <div className="text-center">
+              <div className="text-2xl font-bold text-white">24/7</div>
+              <div className="text-xs text-gray-500">Local Support</div>
+            </div>
+            <div className="h-8 w-px bg-white/20 hidden sm:block" />
+            <div className="text-center">
+              <div className="text-2xl font-bold text-white">AEST</div>
+              <div className="text-xs text-gray-500">Business Hours</div>
             </div>
           </div>
         </div>

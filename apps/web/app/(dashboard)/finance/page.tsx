@@ -44,19 +44,19 @@ const budgetCategories = [
 
 export default function FinancePage() {
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {/* Page Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Financial Management</h1>
-          <p className="text-gray-500">Track revenue, expenses, and financial health</p>
+          <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Financial Management</h1>
+          <p className="text-sm sm:text-base text-gray-500">Track revenue, expenses, and financial health</p>
         </div>
-        <div className="flex gap-3">
-          <Button variant="outline">
+        <div className="flex gap-2 sm:gap-3">
+          <Button variant="outline" size="sm" className="flex-1 sm:flex-none">
             <BarChart3 className="mr-2 h-4 w-4" />
             Reports
           </Button>
-          <Button>
+          <Button size="sm" className="flex-1 sm:flex-none">
             <Receipt className="mr-2 h-4 w-4" />
             New Invoice
           </Button>
@@ -64,28 +64,28 @@ export default function FinancePage() {
       </div>
 
       {/* Financial Stats */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
         {financialStats.map((stat) => (
           <Card key={stat.label}>
-            <CardContent className="p-6">
+            <CardContent className="p-4 sm:p-6">
               <div className="flex items-center justify-between">
-                <div className={`p-2 rounded-lg ${stat.color}`}>
-                  <stat.icon className="h-5 w-5 text-white" />
+                <div className={`p-1.5 sm:p-2 rounded-lg ${stat.color}`}>
+                  <stat.icon className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
                 </div>
-                <div className={`flex items-center gap-1 text-sm font-medium ${
+                <div className={`flex items-center gap-0.5 text-xs sm:text-sm font-medium ${
                   stat.trend === 'up' ? 'text-green-600' : 'text-red-600'
                 }`}>
                   {stat.trend === 'up' ? (
-                    <ArrowUpRight className="h-4 w-4" />
+                    <ArrowUpRight className="h-3 w-3 sm:h-4 sm:w-4" />
                   ) : (
-                    <ArrowDownRight className="h-4 w-4" />
+                    <ArrowDownRight className="h-3 w-3 sm:h-4 sm:w-4" />
                   )}
                   {stat.change}
                 </div>
               </div>
-              <div className="mt-4">
-                <p className="text-2xl font-bold">{stat.value}</p>
-                <p className="text-sm text-gray-500">{stat.label}</p>
+              <div className="mt-3 sm:mt-4">
+                <p className="text-lg sm:text-2xl font-bold">{stat.value}</p>
+                <p className="text-xs sm:text-sm text-gray-500">{stat.label}</p>
               </div>
             </CardContent>
           </Card>
@@ -93,37 +93,37 @@ export default function FinancePage() {
       </div>
 
       {/* Main Content Grid */}
-      <div className="grid gap-6 lg:grid-cols-3">
+      <div className="grid gap-4 sm:gap-6 lg:grid-cols-3">
         {/* Recent Transactions */}
         <Card className="lg:col-span-2">
-          <CardHeader>
-            <CardTitle>Recent Transactions</CardTitle>
-            <CardDescription>Latest financial activities</CardDescription>
+          <CardHeader className="pb-3 sm:pb-6">
+            <CardTitle className="text-base sm:text-lg">Recent Transactions</CardTitle>
+            <CardDescription className="text-xs sm:text-sm">Latest financial activities</CardDescription>
           </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
+          <CardContent className="px-4 sm:px-6">
+            <div className="space-y-3 sm:space-y-4">
               {recentTransactions.map((txn) => (
                 <div
                   key={txn.id}
-                  className="flex items-center justify-between p-4 rounded-lg border"
+                  className="flex items-center justify-between p-3 sm:p-4 rounded-lg border"
                 >
-                  <div className="flex items-center gap-4">
-                    <div className={`p-2 rounded-lg ${
+                  <div className="flex items-center gap-3 sm:gap-4 min-w-0">
+                    <div className={`p-1.5 sm:p-2 rounded-lg flex-shrink-0 ${
                       txn.type === 'income' ? 'bg-green-100' : 'bg-red-100'
                     }`}>
                       {txn.type === 'income' ? (
-                        <ArrowUpRight className={`h-5 w-5 text-green-600`} />
+                        <ArrowUpRight className="h-4 w-4 sm:h-5 sm:w-5 text-green-600" />
                       ) : (
-                        <ArrowDownRight className={`h-5 w-5 text-red-600`} />
+                        <ArrowDownRight className="h-4 w-4 sm:h-5 sm:w-5 text-red-600" />
                       )}
                     </div>
-                    <div>
-                      <p className="font-medium">{txn.description}</p>
-                      <p className="text-sm text-gray-500">{txn.date}</p>
+                    <div className="min-w-0">
+                      <p className="font-medium text-sm sm:text-base truncate">{txn.description}</p>
+                      <p className="text-xs sm:text-sm text-gray-500">{txn.date}</p>
                     </div>
                   </div>
-                  <div className="text-right">
-                    <p className={`font-bold ${
+                  <div className="text-right flex-shrink-0 ml-2">
+                    <p className={`font-bold text-sm sm:text-base ${
                       txn.amount > 0 ? 'text-green-600' : 'text-red-600'
                     }`}>
                       {txn.amount > 0 ? '+' : ''}${Math.abs(txn.amount).toLocaleString()}
@@ -140,27 +140,27 @@ export default function FinancePage() {
 
         {/* Pending Invoices */}
         <Card>
-          <CardHeader>
-            <CardTitle>Pending Invoices</CardTitle>
-            <CardDescription>Invoices awaiting payment</CardDescription>
+          <CardHeader className="pb-3 sm:pb-6">
+            <CardTitle className="text-base sm:text-lg">Pending Invoices</CardTitle>
+            <CardDescription className="text-xs sm:text-sm">Invoices awaiting payment</CardDescription>
           </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
+          <CardContent className="px-4 sm:px-6">
+            <div className="space-y-3 sm:space-y-4">
               {pendingInvoices.map((invoice) => (
                 <div
                   key={invoice.id}
-                  className="p-4 rounded-lg border"
+                  className="p-3 sm:p-4 rounded-lg border"
                 >
                   <div className="flex items-center justify-between mb-2">
-                    <span className="font-mono text-sm">{invoice.id}</span>
-                    <Badge variant={invoice.status === 'overdue' ? 'destructive' : 'warning'}>
+                    <span className="font-mono text-xs sm:text-sm">{invoice.id}</span>
+                    <Badge variant={invoice.status === 'overdue' ? 'destructive' : 'warning'} className="text-xs">
                       {invoice.status}
                     </Badge>
                   </div>
-                  <p className="font-medium">{invoice.customer}</p>
+                  <p className="font-medium text-sm sm:text-base">{invoice.customer}</p>
                   <div className="flex items-center justify-between mt-2">
-                    <span className="text-sm text-gray-500">Due: {invoice.dueDate}</span>
-                    <span className="font-bold">${invoice.amount.toLocaleString()}</span>
+                    <span className="text-xs sm:text-sm text-gray-500">Due: {invoice.dueDate}</span>
+                    <span className="font-bold text-sm sm:text-base">${invoice.amount.toLocaleString()}</span>
                   </div>
                 </div>
               ))}
@@ -174,21 +174,21 @@ export default function FinancePage() {
 
       {/* Budget Overview */}
       <Card>
-        <CardHeader>
-          <CardTitle>Budget Overview</CardTitle>
-          <CardDescription>Monthly budget utilization by category</CardDescription>
+        <CardHeader className="pb-3 sm:pb-6">
+          <CardTitle className="text-base sm:text-lg">Budget Overview</CardTitle>
+          <CardDescription className="text-xs sm:text-sm">Monthly budget utilization by category</CardDescription>
         </CardHeader>
-        <CardContent>
-          <div className="space-y-6">
+        <CardContent className="px-4 sm:px-6">
+          <div className="space-y-4 sm:space-y-6">
             {budgetCategories.map((item) => (
               <div key={item.category}>
                 <div className="flex items-center justify-between mb-2">
-                  <span className="font-medium">{item.category}</span>
-                  <span className="text-sm text-gray-500">
+                  <span className="font-medium text-sm sm:text-base">{item.category}</span>
+                  <span className="text-xs sm:text-sm text-gray-500">
                     ${item.spent.toLocaleString()} / ${item.budget.toLocaleString()}
                   </span>
                 </div>
-                <div className="h-3 bg-gray-100 rounded-full overflow-hidden">
+                <div className="h-2 sm:h-3 bg-gray-100 rounded-full overflow-hidden">
                   <div
                     className={`h-full rounded-full ${
                       item.percentage > 90 ? 'bg-red-500' :
@@ -197,7 +197,7 @@ export default function FinancePage() {
                     style={{ width: `${item.percentage}%` }}
                   />
                 </div>
-                <p className="text-sm text-gray-500 mt-1">{item.percentage}% utilized</p>
+                <p className="text-xs sm:text-sm text-gray-500 mt-1">{item.percentage}% utilized</p>
               </div>
             ))}
           </div>

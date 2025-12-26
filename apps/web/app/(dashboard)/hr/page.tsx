@@ -49,19 +49,19 @@ const stats = [
 
 export default function HRPage() {
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {/* Page Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Human Resources</h1>
-          <p className="text-gray-500">Manage employees, departments, and HR operations</p>
+          <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Human Resources</h1>
+          <p className="text-sm sm:text-base text-gray-500">Manage employees and departments</p>
         </div>
-        <div className="flex gap-3">
-          <Button variant="outline">
+        <div className="flex gap-2 sm:gap-3">
+          <Button variant="outline" size="sm" className="flex-1 sm:flex-none">
             <Download className="mr-2 h-4 w-4" />
             Export
           </Button>
-          <Button>
+          <Button size="sm" className="flex-1 sm:flex-none">
             <Plus className="mr-2 h-4 w-4" />
             Add Employee
           </Button>
@@ -69,12 +69,12 @@ export default function HRPage() {
       </div>
 
       {/* Stats */}
-      <div className="grid gap-4 md:grid-cols-4">
+      <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
         {stats.map((stat) => (
           <Card key={stat.label}>
-            <CardContent className="p-6">
-              <p className="text-sm text-gray-500">{stat.label}</p>
-              <p className="text-2xl font-bold">{stat.value}</p>
+            <CardContent className="p-4 sm:p-6">
+              <p className="text-xs sm:text-sm text-gray-500">{stat.label}</p>
+              <p className="text-xl sm:text-2xl font-bold mt-1">{stat.value}</p>
             </CardContent>
           </Card>
         ))}
@@ -82,20 +82,20 @@ export default function HRPage() {
 
       {/* Departments Overview */}
       <Card>
-        <CardHeader>
-          <CardTitle>Departments</CardTitle>
-          <CardDescription>Employee distribution by department</CardDescription>
+        <CardHeader className="pb-3 sm:pb-6">
+          <CardTitle className="text-base sm:text-lg">Departments</CardTitle>
+          <CardDescription className="text-xs sm:text-sm">Employee distribution by department</CardDescription>
         </CardHeader>
-        <CardContent>
-          <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-6">
+        <CardContent className="px-4 sm:px-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
             {departments.map((dept) => (
-              <div key={dept.name} className="flex items-center gap-3 p-4 rounded-lg border">
-                <div className={`w-10 h-10 rounded-lg ${dept.color} flex items-center justify-center`}>
-                  <Building2 className="h-5 w-5 text-white" />
+              <div key={dept.name} className="flex items-center gap-2 sm:gap-3 p-3 sm:p-4 rounded-lg border">
+                <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-lg ${dept.color} flex items-center justify-center flex-shrink-0`}>
+                  <Building2 className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
                 </div>
-                <div>
-                  <p className="font-medium">{dept.name}</p>
-                  <p className="text-sm text-gray-500">{dept.count} employees</p>
+                <div className="min-w-0">
+                  <p className="font-medium text-sm sm:text-base truncate">{dept.name}</p>
+                  <p className="text-xs sm:text-sm text-gray-500">{dept.count}</p>
                 </div>
               </div>
             ))}
@@ -103,70 +103,103 @@ export default function HRPage() {
         </CardContent>
       </Card>
 
-      {/* Employees Table */}
+      {/* Employees Table/List */}
       <Card>
-        <CardHeader>
-          <div className="flex items-center justify-between">
+        <CardHeader className="pb-3 sm:pb-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
-              <CardTitle>Employees Directory</CardTitle>
-              <CardDescription>View and manage all employees</CardDescription>
+              <CardTitle className="text-base sm:text-lg">Employees Directory</CardTitle>
+              <CardDescription className="text-xs sm:text-sm">View and manage all employees</CardDescription>
             </div>
-            <div className="flex gap-3">
-              <div className="relative w-64">
+            <div className="flex gap-2 sm:gap-3">
+              <div className="relative flex-1 sm:w-64">
                 <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
                 <Input placeholder="Search employees..." className="pl-10" />
               </div>
-              <Button variant="outline" size="icon">
+              <Button variant="outline" size="icon" className="flex-shrink-0">
                 <Filter className="h-4 w-4" />
               </Button>
             </div>
           </div>
         </CardHeader>
-        <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Employee</TableHead>
-                <TableHead>Department</TableHead>
-                <TableHead>Position</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Hire Date</TableHead>
-                <TableHead className="w-10"></TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {employees.map((employee) => (
-                <TableRow key={employee.id}>
-                  <TableCell>
-                    <div className="flex items-center gap-3">
-                      <div className="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center">
-                        <span className="text-sm font-medium text-gray-600">
-                          {employee.name.split(' ').map(n => n[0]).join('')}
-                        </span>
-                      </div>
-                      <div>
-                        <p className="font-medium">{employee.name}</p>
-                        <p className="text-sm text-gray-500">{employee.email}</p>
-                      </div>
-                    </div>
-                  </TableCell>
-                  <TableCell>{employee.department}</TableCell>
-                  <TableCell>{employee.position}</TableCell>
-                  <TableCell>
-                    <Badge variant={employee.status === 'active' ? 'success' : 'warning'}>
-                      {employee.status === 'active' ? 'Active' : 'On Leave'}
-                    </Badge>
-                  </TableCell>
-                  <TableCell className="text-gray-500">{employee.hireDate}</TableCell>
-                  <TableCell>
-                    <Button variant="ghost" size="icon">
-                      <MoreHorizontal className="h-4 w-4" />
-                    </Button>
-                  </TableCell>
+        <CardContent className="px-4 sm:px-6">
+          {/* Desktop Table */}
+          <div className="hidden md:block">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Employee</TableHead>
+                  <TableHead>Department</TableHead>
+                  <TableHead>Position</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead>Hire Date</TableHead>
+                  <TableHead className="w-10"></TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {employees.map((employee) => (
+                  <TableRow key={employee.id}>
+                    <TableCell>
+                      <div className="flex items-center gap-3">
+                        <div className="h-10 w-10 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center">
+                          <span className="text-sm font-medium text-white">
+                            {employee.name.split(' ').map(n => n[0]).join('')}
+                          </span>
+                        </div>
+                        <div>
+                          <p className="font-medium">{employee.name}</p>
+                          <p className="text-sm text-gray-500">{employee.email}</p>
+                        </div>
+                      </div>
+                    </TableCell>
+                    <TableCell>{employee.department}</TableCell>
+                    <TableCell>{employee.position}</TableCell>
+                    <TableCell>
+                      <Badge variant={employee.status === 'active' ? 'success' : 'warning'}>
+                        {employee.status === 'active' ? 'Active' : 'On Leave'}
+                      </Badge>
+                    </TableCell>
+                    <TableCell className="text-gray-500">{employee.hireDate}</TableCell>
+                    <TableCell>
+                      <Button variant="ghost" size="icon">
+                        <MoreHorizontal className="h-4 w-4" />
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+
+          {/* Mobile Card List */}
+          <div className="md:hidden space-y-3">
+            {employees.map((employee) => (
+              <div key={employee.id} className="p-4 rounded-xl border bg-gray-50/50">
+                <div className="flex items-start gap-3">
+                  <div className="h-10 w-10 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center flex-shrink-0">
+                    <span className="text-sm font-medium text-white">
+                      {employee.name.split(' ').map(n => n[0]).join('')}
+                    </span>
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="min-w-0">
+                        <p className="font-medium text-gray-900 truncate">{employee.name}</p>
+                        <p className="text-xs text-gray-500">{employee.position}</p>
+                      </div>
+                      <Badge variant={employee.status === 'active' ? 'success' : 'warning'} className="text-xs flex-shrink-0">
+                        {employee.status === 'active' ? 'Active' : 'Leave'}
+                      </Badge>
+                    </div>
+                    <div className="flex items-center justify-between mt-2 pt-2 border-t border-gray-200">
+                      <span className="text-xs text-gray-500">{employee.department}</span>
+                      <span className="text-xs text-gray-400">Since {employee.hireDate}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </CardContent>
       </Card>
     </div>
