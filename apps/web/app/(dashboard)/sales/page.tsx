@@ -1,7 +1,6 @@
 'use client'
 
 import { 
-  ShoppingCart,
   Search,
   Plus,
   Filter,

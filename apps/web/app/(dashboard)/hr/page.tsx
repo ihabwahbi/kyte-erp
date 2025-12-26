@@ -1,15 +1,12 @@
 'use client'
 
 import { 
-  Users,
   Search,
   Plus,
   Filter,
   Download,
   MoreHorizontal,
-  Building2,
-  Mail,
-  Phone
+  Building2
 } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'

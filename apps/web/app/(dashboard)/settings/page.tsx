@@ -1,14 +1,12 @@
 'use client'
 
 import { 
-  Settings,
   User,
   Building2,
   Bell,
   Shield,
   Database,
-  Palette,
-  Globe
+  Palette
 } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'

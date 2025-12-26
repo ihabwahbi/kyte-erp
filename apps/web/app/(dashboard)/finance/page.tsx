@@ -4,13 +4,11 @@ import {
   BarChart3,
   DollarSign,
   TrendingUp,
-  TrendingDown,
   ArrowUpRight,
   ArrowDownRight,
   Receipt,
   CreditCard,
-  Wallet,
-  PieChart
+  Wallet
 } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'

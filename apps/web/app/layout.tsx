@@ -4,8 +4,10 @@ import { Providers } from "./providers"
 import "./globals.css"
 
 export const metadata: Metadata = {
-  title: "ERP Showcase - Enterprise Resource Planning",
-  description: "Modern ERP solution for businesses and retail operations",
+  title: "Kyte ERP - The Future of Enterprise Resource Planning",
+  description: "AI-powered ERP that's simple, flexible, and lightning fast. Built for small businesses ready to compete with the giants.",
+  keywords: ["ERP", "AI", "business management", "inventory", "sales", "HR", "finance", "small business"],
+  authors: [{ name: "Kyte" }],
 }
 
 export const viewport: Viewport = {
